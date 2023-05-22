@@ -1,18 +1,20 @@
+import { RickAndMortyService } from './../rickandmorty.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-characters',
   templateUrl: './characters.component.html',
   styleUrls: ['./characters.component.css']
 })
 export class CharactersComponent implements OnInit {
-  characters: any[] = [];
- constructor(private http: HttpClient) {}
 
- ngOnInit() {
-   this.http.get<any>('assets/database.json').subscribe(data => {
-    this.characters = data.characters;
-  }); }
+  characters:any = null;
 
+  constructor(private RickAndMortyService: RickAndMortyService) { }
 
+  ngOnInit() {
+    this.RickAndMortyService.retornar()
+      .subscribe( result => this.characters = result)
+  }
 }
